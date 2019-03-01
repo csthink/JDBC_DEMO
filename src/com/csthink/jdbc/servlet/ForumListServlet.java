@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,6 +40,13 @@ public class ForumListServlet extends HttpServlet {
 
         List<Message> messages = messageService.getMessageList(page, pageSize); // 分页获取全部留言
 
+        // 分页
+        List<Integer> pageList = new ArrayList<>();
+        for (int i = 1; i <= lastPage; i++) {
+            pageList.add(i);
+        }
+
+        request.setAttribute("pageList", pageList);
         request.setAttribute("page", page);
         request.setAttribute("lastPage", lastPage);
         request.setAttribute("total", total);
