@@ -4,7 +4,7 @@ USE jdbc;
 
 CREATE TABLE `message` (
 	`id` INT ( 11 ) NOT NULL AUTO_INCREMENT,
-	`user_id` INT ( 11 ) NOT NULL,
+	`uid` INT ( 11 ) NOT NULL,
 	`username` VARCHAR ( 20 ) NOT NULL,
 	`title` VARCHAR ( 32 ) NOT NULL,
 	`content` VARCHAR ( 4096 ) NOT NULL,
@@ -52,3 +52,6 @@ CREATE TABLE `user` (
 INSERT INTO `user`
 VALUES
 	( NULL, 'admin', 'admin', 'csthink', '1989-01-01 00:00:00', '15012345678', '三清观2-1' );
+
+	-- 修改message表字段user_id 名称
+	ALTER TABLE message CHANGE uid uid INT ( 11 ) NOT NULL;
