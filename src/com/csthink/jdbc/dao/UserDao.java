@@ -27,7 +27,7 @@ public class UserDao {
 
         try {
             conn = JDBCUtils.getConnection();
-            String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+            String sql = "SELECT `id`,`username`,`password`,`phone` FROM user WHERE username = ? AND password = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -39,10 +39,7 @@ public class UserDao {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setAddress(rs.getString("address"));
-                user.setBirthday(rs.getDate("birthday"));
                 user.setPhone(rs.getString("phone"));
-                user.setRealname(rs.getString("real_name"));
             }
         } catch (SQLException e) {
             System.out.println("登录失败");
@@ -52,5 +49,34 @@ public class UserDao {
         }
 
         return user;
+    }
+
+    /**
+     * 保存用户信息
+     * @param user User
+     * @return boolean
+     */
+    public boolean save(User user) {
+        Connection  conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = JDBCUtils.getConnection();
+            String sql = "INSERT user(`username`,`password`,`phone`) VALUES(?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getPhone());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("用户注册失败");
+            e.printStackTrace();
+            return false;
+        } finally {
+            JDBCUtils.release(null, pstmt, conn);
+        }
+
+        return true;
     }
 }

@@ -54,4 +54,30 @@ VALUES
 	( NULL, 'admin', 'admin', 'csthink', '1989-01-01 00:00:00', '15012345678', '三清观2-1' );
 
 	-- 修改message表字段user_id 名称
-	ALTER TABLE message CHANGE uid uid INT ( 11 ) NOT NULL;
+	ALTER TABLE `jdbc`.`message` CHANGE uid uid INT ( 11 ) NOT NULL;
+
+-- user 表添加 头像 photo_path
+ALTER TABLE `jdbc`.`user` ADD photo_path CHAR(32) NOT NULL DEFAULT '';
+
+ALTER TABLE `jdbc`.`user`
+	CHANGE COLUMN `photo_path` `photo` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '头像' AFTER `address`,
+	MODIFY COLUMN `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '编号' FIRST,
+	MODIFY COLUMN `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名' AFTER `id`,
+	MODIFY COLUMN `password` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码' AFTER `username`,
+	MODIFY COLUMN `real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '真实姓名' AFTER `password`,
+	MODIFY COLUMN `birthday` timestamp(0) NULL COMMENT '生日' AFTER `real_name`,
+	MODIFY COLUMN `phone` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '电话' AFTER `birthday`,
+	MODIFY COLUMN `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '地址' AFTER `phone`,
+	ADD COLUMN `created_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间' AFTER `photo`,
+	ADD COLUMN `updated_at` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间' AFTER `created_at`;
+
+
+ALTER TABLE `jdbc`.`user`
+	ADD COLUMN `sex` enum('男','女','保密') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '保密' COMMENT '性别(m:男, f:女, u:保密)' AFTER `real_name`,
+	ADD COLUMN `interest` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '爱好' AFTER `photo`;
+
+ALTER TABLE `jdbc`.`user`
+	CHANGE COLUMN `interest` `interest` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '兴趣(0:前端，1:后端，2:架构)' AFTER `photo`;
+
+ALTER TABLE `jdbc`.`user`
+	MODIFY COLUMN `birthday` date NULL COMMENT '生日' AFTER `sex`;

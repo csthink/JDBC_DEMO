@@ -12,7 +12,7 @@ public class LogoutServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (null != request.getSession().getAttribute("user")) {
             request.getSession().setAttribute("user", null);
-            request.getRequestDispatcher("/forum/list.do").forward(request, response);
         }
+        response.sendRedirect("/forum/list.do");
     }
 }

@@ -96,22 +96,28 @@
 <script src="/js/bootstrap.min.js"></script>
 <script>
     $(function () {
+        $(window).keydown(function(event) {
+            if (13 == event.keyCode) {
+                $("#submit").click();
+            }
+        });
+
         $("#submit").click(function () {
-            $.post(
-                "<%=basePath%>/login.do",
-                {
-                    username: $("input[name=username]").val(),
-                    password: $("input[name=password]").val(),
-                    remember: $("input[name=remember]").val()
-                },
-                function (result) {
-                    var flag = result.flag;
-                    if (flag === true) {
-                        window.location.href = "<%=basePath%>/forum/list.do";
-                    } else {
-                        $(".tip").text(result.msg);
-                    }
-                }, "json");
+        $.post(
+            "<%=basePath%>/login.do",
+            {
+                username: $("input[name=username]").val(),
+                password: $("input[name=password]").val(),
+                remember: $("input[name=remember]").val()
+            },
+            function (result) {
+                var flag = result.flag;
+                if (flag === true) {
+                    window.location.href = "<%=basePath%>/forum/list.do";
+                } else {
+                    $(".tip").text(result.msg);
+                }
+            }, "json");
         });
     });
 </script>

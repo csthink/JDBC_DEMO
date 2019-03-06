@@ -10,13 +10,23 @@ public class User {
 
     private String password;
 
-    private String realname;
+    private String realName;
+
+    private String sex;
 
     private Date birthday;
 
     private String phone;
 
     private String address;
+
+    private String photo;
+
+    private String interest;
+
+    private Date createdAt;
+
+    private Date updatedAt;
 
     public int getId() {
         return id;
@@ -42,12 +52,20 @@ public class User {
         this.password = password;
     }
 
-    public String getRealname() {
-        return realname;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public Date getBirthday() {
@@ -72,5 +90,54 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", realName='" + realName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birthday=" + birthday +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", photo='" + photo + '\'' +
+                ", interest='" + interest + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
