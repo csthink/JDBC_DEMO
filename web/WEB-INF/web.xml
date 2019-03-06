@@ -57,6 +57,21 @@
         <url-pattern>/register.do</url-pattern>
     </servlet-mapping>
 
+    <!--verificationCode-->
+
+    <servlet>
+        <servlet-name>VerificationCodeServlet</servlet-name>
+        <description>验证码生成</description>
+        <servlet-class>com.csthink.jdbc.servlet.VerificationCodeServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VerificationCodeServlet</servlet-name>
+        <url-pattern>/verificationCode.do</url-pattern>
+    </servlet-mapping>
+
+
+
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

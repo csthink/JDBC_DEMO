@@ -41,32 +41,35 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
-
-        User user = loginService.login(username, password);
-
-        System.out.println("username: " + username + " password: " + password + " remember:" + remember);
-        System.out.println(user);
+        String verifyCode = request.getParameter("verifyCode");
 
         JSONObject jsonObject = new JSONObject();
         response.setContentType("text/html;charset=utf-8");
 
-        if (null == user) {
-            //jsonObject = new JSONObject("{flag: false, msg: 用户名或密码错误}");
+        // 校验验证码是否正确
+        String verifyCodeStored = (String) request.getSession().getAttribute("verifyCode");
+        if (!verifyCodeStored.equalsIgnoreCase(verifyCode)) {
             jsonObject.put("flag", false);
-            jsonObject.put("msg", "用户名或密码错误");
+            jsonObject.put("msg", "验证码错误");
         } else {
-            // 判断复选框是否勾选
-            if ("true".equals(remember)) {
-                System.out.println("remember");
-                Cookie cookie = new Cookie("username", username);
-                cookie.setPath("/"); // 设置有效路径
-                cookie.setMaxAge(60 * 60 * 24 * 15);// 设置有效时间 15d
-                response.addCookie(cookie); // 将cookie回写到浏览器：
-            }
+            User user = loginService.login(username, password);
+            if (null == user) {
+                //jsonObject = new JSONObject("{flag: false, msg: 用户名或密码错误}");
+                jsonObject.put("flag", false);
+                jsonObject.put("msg", "用户名或密码错误");
+            } else {
+                // 判断复选框是否勾选
+                if ("true".equals(remember)) {
+                    Cookie cookie = new Cookie("username", username);
+                    cookie.setPath("/"); // 设置有效路径
+                    cookie.setMaxAge(60 * 60 * 24 * 15);// 设置有效时间 15d
+                    response.addCookie(cookie); // 将cookie回写到浏览器：
+                }
 
-            request.getSession().setAttribute("user", user);
-            //jsonObject = new JSONObject("{flag: true}");
-            jsonObject.put("flag", true);
+                request.getSession().setAttribute("user", user);
+                //jsonObject = new JSONObject("{flag: true}");
+                jsonObject.put("flag", true);
+            }
         }
 
         response.getOutputStream().write(jsonObject.toString().getBytes(StandardCharsets.UTF_8));

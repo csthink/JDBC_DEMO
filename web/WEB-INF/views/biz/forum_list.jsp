@@ -97,6 +97,16 @@
         </c:forEach>
     </div>
 
+    <%
+        if (null != request.getSession().getAttribute("user")) {
+    %>
+    <div>
+        <a class="btn btn-default btn-lg btn-success" href="#" role="button">我有话说</a>
+    </div>
+    <%
+        }
+    %>
+
     <%--分页组件--%>
     <nav aria-label="Page navigation" class="pull-right">
         <ul class="pagination pagination-lg">

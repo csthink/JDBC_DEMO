@@ -41,52 +41,78 @@
 </nav>
 
 <div class="container">
-    <a href="<%=basePath%>/register.do">去注册</a>
 
-    <form class="form-horizontal" action="<%=basePath%>/login.do" method="post">
-        <div class="form-group">
-            <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
-            <%
-                String username = "";
-                // 获得从客户端携带过来的所有的Cookie
-                Cookie[] cookies = request.getCookies();
-                Cookie cookie = CookieUtils.findCookie(cookies, "username");
-                // 记住用户名功能中保存的username
-                if (null != cookie) {
-                    username = cookie.getValue();
-                }
+    <div class="col-sm-3">
+        <a href="<%=basePath%>/register.do" class="btn btn-default">去注册</a>
+    </div>
+    <div class="col-sm-5">
+        <form class="form-horizontal" action="<%=basePath%>/login.do" method="post">
+            <div class="form-group">
+                <div class="row">
+                    <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
+                    <%
+                        String username = "";
+                        // 获得从客户端携带过来的所有的Cookie
+                        Cookie[] cookies = request.getCookies();
+                        Cookie cookie = CookieUtils.findCookie(cookies, "username");
+                        // 记住用户名功能中保存的username
+                        if (null != cookie) {
+                            username = cookie.getValue();
+                        }
 
-                // 新注册用户需要从session中获取
-                if (null != session.getAttribute("username")) {
-                    username = (String)session.getAttribute("username");
-                }
-            %>
-            <div class="col-sm-10">
-                <span class="tip" style="color: red;"></span>
-                <input type="text" class="form-control" id="inputUsername"  name="username" placeholder="请输入用户名" autofocus required value="<%=username%>">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="col-sm-2 control-label">密码</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="请输入密码" required>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="remember" value="true"> 记住我
-                    </label>
+                        // 新注册用户需要从session中获取
+                        if (null != session.getAttribute("username")) {
+                            username = (String)session.getAttribute("username");
+                        }
+                    %>
+                    <div class="col-sm-10">
+                        <span class="tip" style="color: red;"></span>
+                        <input type="text" class="form-control" id="inputUsername"  name="username" placeholder="请输入用户名" autofocus required value="<%=username%>">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="button" class="btn btn-default" id="submit" value="登录">
+            <div class="form-group">
+                <div class="row">
+                    <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="请输入密码" required>
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
+
+            <div class="form-group">
+                <div class="row">
+                    <label for="verificationCode" class="col-sm-2 control-label">验证码</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="verificationCode" name="verifyCode" placeholder="请输入验证码" required>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="<%=basePath%>/verificationCode.do" alt="" id="verificationCodeImage" onclick="javascript:changeVerificationCode()" style="cursor: pointer">
+                        <a href="#" onclick="javascript:changeVerificationCode()">换一张</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="remember" value="true"> 记住我
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="button" class="btn btn-default" id="submit" value="登录">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-4"></div>
+
+
 </div>
 <!-- /container -->
 
@@ -94,6 +120,7 @@
 <script src="/js/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
 <script>
     $(function () {
         $(window).keydown(function(event) {
@@ -103,21 +130,24 @@
         });
 
         $("#submit").click(function () {
-        $.post(
-            "<%=basePath%>/login.do",
-            {
-                username: $("input[name=username]").val(),
-                password: $("input[name=password]").val(),
-                remember: $("input[name=remember]").val()
-            },
-            function (result) {
-                var flag = result.flag;
-                if (flag === true) {
-                    window.location.href = "<%=basePath%>/forum/list.do";
-                } else {
-                    $(".tip").text(result.msg);
-                }
-            }, "json");
+            $(this).attr("disabled", true);
+            $.post(
+                "<%=basePath%>/login.do",
+                {
+                    username: $("input[name=username]").val(),
+                    password: $("input[name=password]").val(),
+                    remember: $("input[name=remember]").val(),
+                    verifyCode: $("input[name=verifyCode]").val()
+                },
+                function (result) {
+                    $("#submit").attr("disabled", false);
+                    var flag = result.flag;
+                    if (flag === true) {
+                        window.location.href = "<%=basePath%>/forum/list.do";
+                    } else {
+                        $(".tip").text(result.msg);
+                    }
+                }, "json");
         });
     });
 </script>
