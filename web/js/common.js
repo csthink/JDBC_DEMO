@@ -21,7 +21,6 @@ function currentTime() {
 
 function changeVerificationCode() {
     var img = document.getElementById("verificationCodeImage");
-    // img.src = "/verificationCode.do?s=" + new Date();
     img.src = "/verificationCode.do?s=" + Math.random();
 }
 

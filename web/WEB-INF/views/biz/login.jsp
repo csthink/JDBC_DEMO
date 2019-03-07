@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>登录页面</title>
+    <base href="<%=basePath%>/">
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<%= basePath %>">小不点</a>
+            <a class="navbar-brand" href="<%=basePath%>">小不点</a>
         </div>
     </div>
 </nav>
@@ -43,10 +44,10 @@
 <div class="container">
 
     <div class="col-sm-3">
-        <a href="<%=basePath%>/register.do" class="btn btn-default">去注册</a>
+        <a href="/register.do" class="btn btn-default">去注册</a>
     </div>
     <div class="col-sm-5">
-        <form class="form-horizontal" action="<%=basePath%>/login.do" method="post">
+        <form class="form-horizontal" action="/login.do" method="post">
             <div class="form-group">
                 <div class="row">
                     <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
@@ -87,8 +88,9 @@
                         <input type="text" class="form-control" id="verificationCode" name="verifyCode" placeholder="请输入验证码" required>
                     </div>
                     <div class="col-sm-6">
-                        <img src="<%=basePath%>/verificationCode.do" alt="" id="verificationCodeImage" onclick="javascript:changeVerificationCode()" style="cursor: pointer">
-                        <a href="#" onclick="javascript:changeVerificationCode()">换一张</a>
+                        <img src="/verificationCode.do" alt="" id="verificationCodeImage" onclick="javascript:changeVerificationCode()" style="cursor: pointer">
+                        <a href="javascript:changeVerificationCode()" style="text-decoration: none">&nbsp;换一张</a>
+
                     </div>
                 </div>
             </div>
@@ -132,7 +134,7 @@
         $("#submit").click(function () {
             $(this).attr("disabled", true);
             $.post(
-                "<%=basePath%>/login.do",
+                "/login.do",
                 {
                     username: $("input[name=username]").val(),
                     password: $("input[name=password]").val(),
@@ -143,7 +145,7 @@
                     $("#submit").attr("disabled", false);
                     var flag = result.flag;
                     if (flag === true) {
-                        window.location.href = "<%=basePath%>/forum/list.do";
+                        window.location.href = "/forum/list.do";
                     } else {
                         $(".tip").text(result.msg);
                     }

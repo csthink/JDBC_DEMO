@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>注册页面</title>
+    <base href="<%=basePath%>/">
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/my.css" rel="stylesheet">
@@ -36,18 +37,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<%= basePath%>">小不点</a>
+            <a class="navbar-brand" href="<%=basePath%>">小不点</a>
         </div>
     </div>
 </nav>
 
 <div class="container">
     <div class="col-sm-3">
-        <a href="<%=basePath%>/login.do" class="btn btn-default">去登录</a>
+        <a href="/login.do" class="btn btn-default">去登录</a>
         <h4 style="color:red">${message}</h4>
     </div>
     <div class="col-sm-6">
-        <form class="form-horizontal" action="<%=basePath%>/register.do" method="post" enctype="multipart/form-data" onsubmit="return checkForm()">
+        <form class="form-horizontal" action="/register.do" method="post" enctype="multipart/form-data" onsubmit="return checkForm()">
             <div class="form-group">
                 <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
                 <div class="col-sm-10">
@@ -134,13 +135,13 @@
 <script src="/js/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="/js/bootstrap.min.js"></script>
-<script src="<%=basePath%>/js/common.js"></script>
+<script src="/js/common.js"></script>
 <%-- 省市区三级联动 --%>
-<script src="<%=basePath%>/packages/address/cityJson.js"></script>
-<script src="<%=basePath%>/packages/address/citySet.js"></script>
-<script src="<%=basePath%>/packages/address/Popt.js"></script>
+<script src="/packages/address/cityJson.js"></script>
+<script src="/packages/address/citySet.js"></script>
+<script src="/packages/address/Popt.js"></script>
 <%-- 日期插件 --%>
-<script src="<%=basePath%>/packages/jedate/src/jedate.js"></script>
+<script src="/packages/jedate/src/jedate.js"></script>
 </body>
 <script>
     function checkForm() {

@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>message 页面</title>
+    <base href="<%=basePath%>/">
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<%= basePath %>">小不点</a>
+            <a class="navbar-brand" href="<%=basePath%>">小不点</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -48,16 +49,16 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false"><%=user.getUsername() %> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<%=basePath%>">我的信息</a></li>
+                            <li><a href="#">我的信息</a></li>
                             <li><a href="#">我的留言</a></li>
-                            <li><a href="<%=basePath%>/logout.do">退出</a></li>
+                            <li><a href="/logout.do">退出</a></li>
                         </ul>
                     </li>
                 <%
                     } else {
                 %>
-                    <li><a href="<%=basePath%>/register.do">注册</a></li>
-                    <li class="active"><a href="<%=basePath%>/login.do">登录 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/register.do">注册</a></li>
+                    <li class="active"><a href="/login.do">登录 <span class="sr-only">(current)</span></a></li>
                 <%
                     }
                 %>
@@ -112,7 +113,7 @@
         <ul class="pagination pagination-lg">
             <c:if test="${page != 1}">
                 <li>
-                    <a href="<%= basePath %>forum/list.do?page=${page - 1}" aria-label="Previous">
+                    <a href="/forum/list.do?page=${page - 1}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -122,17 +123,17 @@
             <c:forEach items="${pageList}" var="pageStr">
                 <c:choose>
                     <c:when test="${pageStr == page}">
-                        <li class="active"><a href="<%= basePath %>forum/list.do?page=${page}">${pageStr}</a>
+                        <li class="active"><a href="/forum/list.do?page=${page}">${pageStr}</a>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="<%= basePath %>forum/list.do?page=${pageStr}">${pageStr}</a></li>
+                        <li><a href="/forum/list.do?page=${pageStr}">${pageStr}</a></li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
 
             <c:if test="${page != lastPage}">
                 <li>
-                    <a href="<%= basePath %>forum/list.do?page=${page + 1}" aria-label="Next">
+                    <a href="/forum/list.do?page=${page + 1}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
